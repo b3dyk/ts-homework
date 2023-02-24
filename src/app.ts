@@ -30,8 +30,6 @@ if (typeof some === "string") {
   str = some;
 }
 
-let person: [string, number] = ["Max", 21];
-
 enum Status {
   LOADING,
   READY,
@@ -81,3 +79,58 @@ const page2: Page = {
   accounts: ["Alex"],
   status: "close",
 };
+
+class Key {
+  private signature: number;
+
+  constructor() {
+    this.signature = Math.floor(Math.random() * 100);
+  }
+
+  getSignature() {
+    return this.signature;
+  }
+}
+
+class Person {
+  constructor(private key: Key) {}
+
+  getKey(): Key {
+    return this.key;
+  }
+}
+
+abstract class House {
+  protected door = false;
+  tenants: Person[] = [];
+
+  constructor(public key: Key) {}
+
+  public comeIn(person: Person): void {
+    if (!this.door) {
+      throw new Error("Door is closed");
+    }
+
+    this.tenants.push(person);
+  }
+
+  public abstract openDoor(key: Key): boolean;
+}
+
+class MyHouse extends House {
+  openDoor(key: Key) {
+    if (key.getSignature() !== this.key.getSignature()) {
+      throw new Error("Key to another door");
+    }
+    return (this.door = true);
+  }
+}
+
+const key = new Key();
+
+const house = new MyHouse(key);
+const person = new Person(key);
+
+house.openDoor(person.getKey());
+
+house.comeIn(person);

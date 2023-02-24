@@ -25,7 +25,6 @@ let str;
 if (typeof some === "string") {
     str = some;
 }
-let person = ["Max", 21];
 var Status;
 (function (Status) {
     Status[Status["LOADING"] = 0] = "LOADING";
@@ -58,4 +57,47 @@ const page2 = {
     accounts: ["Alex"],
     status: "close",
 };
+class Key {
+    constructor() {
+        this.signature = Math.floor(Math.random() * 100);
+    }
+    getSignature() {
+        return this.signature;
+    }
+}
+class Person {
+    constructor(key) {
+        this.key = key;
+    }
+    getKey() {
+        return this.key;
+    }
+}
+class House {
+    constructor(key) {
+        this.key = key;
+        this.door = false;
+        this.tenants = [];
+    }
+    comeIn(person) {
+        if (!this.door) {
+            throw new Error("Door is closed");
+        }
+        this.tenants.push(person);
+    }
+}
+class MyHouse extends House {
+    openDoor(key) {
+        if (key.getSignature() !== this.key.getSignature()) {
+            throw new Error("Key to another door");
+        }
+        return (this.door = true);
+    }
+}
+const key = new Key();
+const house = new MyHouse(key);
+const person = new Person(key);
+house.openDoor(person.getKey());
+house.comeIn(person);
+console.log(house.tenants);
 //# sourceMappingURL=app.js.map
