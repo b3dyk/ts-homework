@@ -41,22 +41,6 @@ function calc(num1, num2) {
 function customError() {
     throw new Error("Error");
 }
-const page1 = {
-    title: "The awesome page",
-    likes: 100,
-    accounts: ["Max", "Anton", "Nikita"],
-    status: "open",
-    details: {
-        createAt: "2021-01-01",
-        updateAt: "2021-05-01",
-    },
-};
-const page2 = {
-    title: "Python or Js",
-    likes: 5,
-    accounts: ["Alex"],
-    status: "close",
-};
 class Key {
     constructor() {
         this.signature = Math.floor(Math.random() * 100);
@@ -99,5 +83,33 @@ const house = new MyHouse(key);
 const person = new Person(key);
 house.openDoor(person.getKey());
 house.comeIn(person);
-console.log(house.tenants);
+function getPromise() {
+    return new Promise((resolve) => {
+        resolve(["Text", 50]);
+    });
+}
+getPromise().then((data) => {
+    console.log(data);
+});
+function compare(top, bottom) {
+    return {
+        name: top.name,
+        color: top.color,
+        position: bottom.position,
+        weight: bottom.weight,
+    };
+}
+function merge(objA, objB) {
+    return Object.assign(objA, objB);
+}
+class Component {
+    constructor(props) {
+        this.props = props;
+    }
+}
+class Page extends Component {
+    pageInfo() {
+        console.log(this.props.title);
+    }
+}
 //# sourceMappingURL=app.js.map
